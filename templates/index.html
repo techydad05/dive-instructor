@@ -166,6 +166,11 @@
           {% endif %}
         </div>
         {% endfor %}
+      {% else %}
+      <div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--text-muted);font-size:0.95rem;">
+        <p style="margin-bottom:0.5rem;">📸 Gallery coming soon</p>
+        <p>Upload dive photos from the <a href="/admin" style="color:var(--blue-300);text-decoration:underline;">admin panel</a>.</p>
+      </div>
       {% endif %}
     </div>
   </section>
