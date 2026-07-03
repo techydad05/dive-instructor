@@ -110,23 +110,4 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  /* ==========================================
-     SEA LIFE ZOOM-UP
-     Fish, jellyfish, seaweed, and bubbles
-     zoom up when their section scrolls into view
-     ========================================== */
-  const seaLifeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const creatures = entry.target.querySelectorAll('.creature');
-        const bubbles = entry.target.querySelectorAll('.bubble');
-        creatures.forEach(c => { c.classList.add('zoom'); c.classList.add('drift'); });
-        bubbles.forEach(b => b.classList.add('zoom'));
-        seaLifeObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.sea-life').forEach(el => seaLifeObserver.observe(el));
-
 });
