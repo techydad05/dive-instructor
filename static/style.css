@@ -461,8 +461,7 @@ body::after {
 .about-image-placeholder {
   width: 100%;
   aspect-ratio: 4/3;
-  background: var(--surface-card);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(13,33,55,0.8), rgba(10,22,40,0.95));
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -470,13 +469,12 @@ body::after {
   flex-direction: column;
   gap: 1rem;
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .about-image-placeholder svg {
-  width: 64px;
-  height: 64px;
-  opacity: 0.4;
+  width: 56px;
+  height: 56px;
 }
 
 .about-text h3 {
