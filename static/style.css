@@ -978,7 +978,8 @@ body::after {
   .contact-form { padding: 1.5rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-  .dive-buoy { display: none; }
+  .dive-buoy { bottom: 10px; right: 6%; }
+  .dive-buoy svg { width: 28px; height: 40px; }
 }
 
 @media (max-width: 480px) {
