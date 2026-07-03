@@ -8,10 +8,8 @@ build/
 venv/
 env/
 
-# Uploaded media (keep placeholder images via !)
-uploads/images/*
-!uploads/images/.gitkeep
-uploads/videos/*
+# Uploaded media
+
 
 # Contact messages
 messages.json

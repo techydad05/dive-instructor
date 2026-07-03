@@ -57,7 +57,7 @@ def get_media_list() -> list[dict]:
     media = []
     for folder in [IMAGE_FOLDER, VIDEO_FOLDER]:
         for f in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime, reverse=True):
-            if f.is_file():
+            if f.is_file() and f.suffix.lower() in ALLOWED_IMAGE_EXTENSIONS | ALLOWED_VIDEO_EXTENSIONS:
                 media.append({
                     'filename': f.name,
                     'type': 'image' if folder == IMAGE_FOLDER else 'video',
