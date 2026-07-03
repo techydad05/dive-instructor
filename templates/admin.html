@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Deep Dive Instruction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='diver.svg') }}">
+  <style>
+    /* Admin-specific styles */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+    }
+    .admin-sidebar {
+      background: var(--navy-800);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .admin-sidebar .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-sidebar .brand span {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .admin-sidebar .brand img {
+      width: 24px;
+      height: 32px;
+    }
+    .admin-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+    .admin-nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .admin-nav a:hover,
+    .admin-nav a.active {
+      color: var(--text-primary);
+      background: rgba(33, 150, 243, 0.1);
+    }
+    .admin-nav a.logout {
+      margin-top: auto;
+      color: #e57373;
+    }
+    .admin-nav a.logout:hover {
+      background: rgba(229, 115, 115, 0.1);
+    }
+    .admin-main {
+      padding: 2rem;
+      max-width: 900px;
+    }
+    .admin-main h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .admin-main .subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .admin-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .admin-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    .admin-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.75rem;
+    }
+    .admin-gallery-item {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--navy-700);
+      border: 1px solid var(--border);
+    }
+    .admin-gallery-item img,
+    .admin-gallery-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .admin-gallery-item .delete-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #e57373;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      opacity: 0;
+    }
+    .admin-gallery-item:hover .delete-btn {
+      opacity: 1;
+    }
+    .admin-gallery-item .delete-btn:hover {
+      background: rgba(229, 115, 115, 0.8);
+      color: #fff;
+    }
+    .admin-gallery-item .badge {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+    }
+    .admin-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .admin-message {
+      background: var(--navy-700);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+    .admin-message .meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .admin-message .from {
+      font-weight: 600;
+      color: var(--blue-300);
+    }
+    .admin-message .msg-body {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .admin-message .interest {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      background: rgba(33, 150, 243, 0.1);
+      color: var(--blue-300);
+    }
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    /* Login page */
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy-900);
+    }
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 2.5rem;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .login-box .brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-box .brand img {
+      width: 48px;
+      height: 64px;
+      margin-bottom: 0.75rem;
+    }
+    .login-box .brand h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .login-box .brand p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .login-error {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(229, 115, 115, 0.1);
+      border: 1px solid rgba(229, 115, 115, 0.3);
+      color: #e57373;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .login-error.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+      .admin-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .admin-main {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+{% if not session.get('admin_logged_in') %}
+  <!-- ===== LOGIN PAGE ===== -->
+  <div class="login-page">
+    <div class="login-box">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='diver.svg') }}" alt="">
+        <h2>Admin Access</h2>
+        <p>Deep Dive Instruction</p>
+      </div>
+      {% if error %}
+      <div class="login-error show">{{ error }}</div>
+      {% endif %}
+      <form method="POST" action="{{ url_for('admin_login') }}">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter admin password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">🔐 Sign In</button>
+      </form>
+    </div>
+  </div>
+
+{% else %}
+  <!-- ===== ADMIN DASHBOARD ===== -->
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="brand">
+        <img src="{{ url_for('static', filename='diver.svg') }}" alt="">
+        <span>Deep Dive</span>
+      </div>
+      <nav class="admin-nav">
+        <a href="#dashboard" class="active" onclick="showTab('dashboard')">📊 Dashboard</a>
+        <a href="#upload" onclick="showTab('upload')">📤 Upload Media</a>
+        <a href="#gallery" onclick="showTab('gallery')">🖼️ Manage Gallery</a>
+        <a href="#messages" onclick="showTab('messages')">✉️ Messages</a>
+        <a href="{{ url_for('admin_logout') }}" class="logout">🚪 Sign Out</a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <!-- Dashboard Tab -->
+      <div id="tab-dashboard" class="tab-content">
+        <h1>📊 Dashboard</h1>
+        <p class="subtitle">Overview of your dive site</p>
+        <div class="about-stats" style="border-top:none;padding-top:0;max-width:600px;">
+          <div class="stat">
+            <div class="stat-number">{{ media|length }}</div>
+            <div class="stat-label">Gallery Items</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">{{ messages|length }}</div>
+            <div class="stat-label">Messages</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">{{ media|selectattr('type','equalto','image')|list|length }}</div>
+            <div class="stat-label">Photos</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;color:var(--text-muted);font-size:0.85rem;">
+          <p>Site: <a href="{{ url_for('index') }}" target="_blank" style="color:var(--blue-300);">View Public Site →</a></p>
+        </div>
+      </div>
+
+      <!-- Upload Tab -->
+      <div id="tab-upload" class="tab-content" style="display:none;">
+        <h1>📤 Upload Media</h1>
+        <p class="subtitle">Add photos and videos to the gallery</p>
+        <div class="admin-card">
+          <div class="upload-area" style="margin:0;border-style:solid;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+            </svg>
+            <h4>Drop files here or click to upload</h4>
+            <p>Images and video clips up to 50MB each</p>
+            <form id="adminUploadForm" enctype="multipart/form-data">
+              <input type="file" id="adminFileInput" name="files" multiple accept="image/*,video/*">
+              <button type="button" class="upload-btn" onclick="document.getElementById('adminFileInput').click()">📤 Choose Files</button>
+            </form>
+            <div id="adminUploadStatus" class="upload-status" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery Management Tab -->
+      <div id="tab-gallery" class="tab-content" style="display:none;">
+        <h1>🖼️ Manage Gallery</h1>
+        <p class="subtitle">{{ media|length }} item(s) in the gallery</p>
+        {% if media %}
+        <div class="admin-gallery">
+          {% for item in media %}
+          <div class="admin-gallery-item" data-filename="{{ item.filename }}" data-folder="{{ item.folder }}">
+            {% if item.type == 'image' %}
+              <img src="{{ url_for('uploaded_file', folder='images', filename=item.filename) }}" alt="" loading="lazy">
+            {% else %}
+              <video src="{{ url_for('uploaded_file', folder='videos', filename=item.filename) }}" muted preload="metadata"></video>
+            {% endif %}
+            <span class="badge">{{ item.type }}</span>
+            <button class="delete-btn" onclick="deleteMedia('{{ item.folder }}', '{{ item.filename }}')" title="Delete">✕</button>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <p>No media uploaded yet. Go to the Upload tab to add some.</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Messages Tab -->
+      <div id="tab-messages" class="tab-content" style="display:none;">
+        <h1>✉️ Messages</h1>
+        <p class="subtitle">{{ messages|length }} contact form submission(s)</p>
+        {% if messages %}
+        <div class="admin-messages">
+          {% for msg in messages|reverse %}
+          <div class="admin-message">
+            <div class="meta">
+              <span class="from">{{ msg.name }} &lt;{{ msg.email }}&gt;</span>
+              <span>{{ msg.timestamp[:10] }}</span>
+            </div>
+            {% if msg.phone %}<span style="font-size:0.8rem;color:var(--text-muted);">📞 {{ msg.phone }}</span>{% endif %}
+            <div class="msg-body">{{ msg.message }}</div>
+            <span class="interest">{{ msg.interest|replace('-',' ')|title }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <p>No messages yet.</p>
+        </div>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Tab switching
+    function showTab(name) {
+      document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+
+      const tab = document.getElementById('tab-' + name);
+      if (tab) tab.style.display = 'block';
+
+      const link = document.querySelector(`.admin-nav a[onclick*="${name}"]`);
+      if (link) link.classList.add('active');
+
+      // Hash
+      history.replaceState(null, '', '#admin-' + name);
+    }
+
+    // Show correct tab from hash
+    const hash = window.location.hash.replace('#admin-', '');
+    if (hash) showTab(hash);
+
+    // Admin file upload
+    const adminFileInput = document.getElementById('adminFileInput');
+    const adminUploadStatus = document.getElementById('adminUploadStatus');
+
+    if (adminFileInput) {
+      adminFileInput.addEventListener('change', async () => {
+        const files = adminFileInput.files;
+        if (!files.length) return;
+
+        adminUploadStatus.textContent = `Uploading ${files.length} file(s)...`;
+        adminUploadStatus.style.display = 'block';
+        adminUploadStatus.style.color = '#64b5f6';
+
+        const formData = new FormData();
+        for (const file of files) {
+          const isImage = file.type.startsWith('image/');
+          const isVideo = file.type.startsWith('video/');
+          if (!isImage && !isVideo) continue;
+          if (file.size > 50 * 1024 * 1024) continue;
+          formData.append('files', file);
+        }
+
+        try {
+          const res = await fetch('/upload', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.success) {
+            adminUploadStatus.textContent = `✅ ${data.message}`;
+            adminUploadStatus.style.color = '#81c784';
+            setTimeout(() => location.reload(), 1200);
+          } else {
+            adminUploadStatus.textContent = `❌ ${data.message}`;
+            adminUploadStatus.style.color = '#e57373';
+          }
+        } catch (err) {
+          adminUploadStatus.textContent = `❌ ${err.message}`;
+          adminUploadStatus.style.color = '#e57373';
+        }
+        adminFileInput.value = '';
+      });
+    }
+
+    // Delete media
+    async function deleteMedia(folder, filename) {
+      if (!confirm('Delete this item?')) return;
+
+      try {
+        const res = await fetch('/admin/delete/' + folder + '/' + encodeURIComponent(filename), { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          location.reload();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+  </script>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Dive Instruction — PADI Pro Freelance Diving Instructor</title>
+  <meta name="description" content="Professional PADI-certified freelance scuba diving instruction. Private courses, guided dives, and certifications in a safe, patient, and expert setting.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='diver.svg') }}">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="#home" class="nav-brand">
+      <img src="{{ url_for('static', filename='diver.svg') }}" alt="" width="28" height="36" style="opacity:0.9">
+      <span>Deep Dive</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="#services">Courses</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact" class="nav-cta">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+
+    <div class="waves">
+      <div class="wave"></div>
+      <!-- Dive Buoy between wave layers -->
+      <div class="dive-buoy" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 56" width="40" height="56">
+          <line x1="20" y1="42" x2="20" y2="56" stroke="#78909c" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+          <ellipse cx="20" cy="38" rx="12" ry="7" fill="#e53935"/>
+          <ellipse cx="20" cy="38" rx="12" ry="7" fill="none" stroke="#c62828" stroke-width="0.8"/>
+          <ellipse cx="18" cy="36" rx="5" ry="3" fill="#ef5350" opacity="0.5"/>
+          <line x1="20" y1="38" x2="8" y2="12" stroke="#455a64" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="8" y="12" width="16" height="11" rx="0.5" fill="#e53935" transform="rotate(-10, 16, 17)"/>
+          <path d="M8 14 L22 12 L22 14 L8 22 Z" fill="#fff" opacity="0.9" transform="rotate(-10, 16, 17)"/>
+        </svg>
+      </div>
+      <div class="wave"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">⭐ PADI Certified · Insured · 10+ Years Experience</div>
+      <h1>Discover the<br><span class="highlight">Deep</span></h1>
+      <p>Professional, patient, one-on-one scuba instruction from a fully licensed PADI Pro. Whether you're taking your first breath underwater or chasing your next certification — you're in safe hands.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">📋 Book a Course</a>
+        <a href="#services" class="btn btn-secondary">View Courses</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section" id="about">
+    <div class="sea-life">
+      <div class="creature creature-fish-1 delay-1">
+        <svg viewBox="0 0 48 24" width="48" height="24"><path d="M0 12 Q8 0 18 6 Q24 9 30 6 Q40 0 48 12 Q40 24 30 18 Q24 15 18 18 Q8 24 0 12" fill="rgba(33,150,243,0.15)"/><circle cx="38" cy="9" r="1.5" fill="rgba(33,150,243,0.25)"/></svg>
+      </div>
+      <div class="creature creature-jelly delay-3">
+        <svg viewBox="0 0 32 40" width="32" height="40"><ellipse cx="16" cy="10" rx="10" ry="8" fill="rgba(100,181,246,0.1)" stroke="rgba(100,181,246,0.15)" stroke-width="0.5"/><path d="M8 16 Q12 28 10 38 M16 16 Q16 30 18 40 M24 16 Q20 28 22 38" fill="none" stroke="rgba(100,181,246,0.1)" stroke-width="1"/></svg>
+      </div>
+      <div class="bubble bubble-1 delay-2"></div>
+      <div class="bubble bubble-2 delay-4"></div>
+    </div>
+    <div class="section-header">
+      <span class="section-tag">About</span>
+      <h2>Your Instructor</h2>
+      <p>Fully licensed, insured, and passionate about teaching diving the right way — safe, patient, and built around you.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-image">
+        <div class="about-image-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          <span>Professional headshot coming soon</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <h3>10+ Years Teaching Underwater</h3>
+        <p>I've logged thousands of dives across the Caribbean, Southeast Asia, and the Pacific — but my favorite place to teach is right here. I believe great diving isn't about how many dives you've done, but how present you are on every single one.</p>
+        <p>My approach is patient, thorough, and tailored to you. No rushed courses, no crowded boats — just focused, one-on-one instruction that builds real confidence underwater. Every certification is recognized worldwide through PADI.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-number">1,200+</div>
+            <div class="stat-label">Students Certified</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Safety Record</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES / COURSES ===== -->
+  <section class="section services" id="services">
+    <div class="sea-life">
+      <div class="creature creature-fish-2 delay-1">
+        <svg viewBox="0 0 56 28" width="56" height="28"><path d="M0 14 Q8 0 20 8 Q26 12 32 8 Q44 0 56 14 Q44 28 32 20 Q26 16 20 20 Q8 28 0 14" fill="rgba(100,181,246,0.12)"/></svg>
+      </div>
+      <div class="creature creature-seaweed-1 delay-4">
+        <svg viewBox="0 0 20 80" width="20" height="80"><path d="M10 0 Q3 15 8 30 Q14 45 8 60 Q3 72 10 80" fill="none" stroke="rgba(38,166,154,0.15)" stroke-width="3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="bubble bubble-3 delay-2"></div>
+      <div class="bubble bubble-4 delay-5"></div>
+      <div class="bubble bubble-5 delay-3"></div>
+    </div>
+    <div class="section-header">
+      <span class="section-tag">Courses</span>
+      <h2>Dive Programs</h2>
+      <p>From your first breath underwater to professional-level certifications — every course is taught with patience, precision, and a focus on real-world skills.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🤿</div>
+        <h3>Discover Scuba Diving</h3>
+        <p>Never tried it? This is your intro. A shallow-water experience that lets you breathe underwater for the first time — no cert required, just curiosity.</p>
+        <div class="price">From $149</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📜</div>
+        <h3>Open Water Diver</h3>
+        <p>Your full PADI Open Water certification. Classroom, confined water, and four open-water dives. After this, you're certified to dive anywhere in the world.</p>
+        <div class="price">From $599</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⬆️</div>
+        <h3>Advanced Open Water</h3>
+        <p>Five adventure dives — deep, navigation, night, and more. Build confidence and experience while earning your Advanced certification.</p>
+        <div class="price">From $449</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🫁</div>
+        <h3>Rescue Diver</h3>
+        <p>Learn to prevent and manage emergencies. The most rewarding course you'll take — it changes how you see every dive. Self-rescue, recognition, and response.</p>
+        <div class="price">From $499</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👥</div>
+        <h3>Private Guided Dives</h3>
+        <p>Already certified? Book a guided dive with a pro. Perfect for refreshing skills, exploring new sites, or just enjoying a stress-free dive with a buddy who knows the water.</p>
+        <div class="price">From $99 / dive</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <h3>Specialty Courses</h3>
+        <p>Nitrox, Deep, Wreck, Night, Peak Performance Buoyancy, and more. Pick your focus and level up your diving with targeted, expert instruction.</p>
+        <div class="price">From $249</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section class="section" id="gallery">
+    <div class="sea-life">
+      <div class="creature creature-fish-3 delay-2">
+        <svg viewBox="0 0 28 14" width="28" height="14"><path d="M0 7 Q5 0 11 3 Q14 5 17 3 Q23 0 28 7 Q23 14 17 11 Q14 9 11 11 Q5 14 0 7" fill="rgba(33,150,243,0.06)"/></svg>
+      </div>
+      <div class="creature creature-seaweed-2 delay-5">
+        <svg viewBox="0 0 16 60" width="16" height="60"><path d="M8 0 Q2 12 7 24 Q12 36 7 48 Q3 56 8 60" fill="none" stroke="rgba(38,166,154,0.06)" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="bubble bubble-6 delay-1"></div>
+    </div>
+    <div class="section-header">
+      <span class="section-tag">Gallery</span>
+      <h2>Dive Memories</h2>
+      <p>A collection of moments from the water — student dives, marine life, and the places we explore together.</p>
+    </div>
+    <div class="gallery-grid">
+      {% if media %}
+        {% for item in media %}
+        <div class="gallery-item">
+          {% if item.type == 'image' %}
+            <img src="{{ url_for('uploaded_file', folder='images', filename=item.filename) }}" alt="Dive photo {{ loop.index }}" loading="lazy">
+          {% else %}
+            <video src="{{ url_for('uploaded_file', folder='videos', filename=item.filename) }}" muted loop preload="metadata"></video>
+          {% endif %}
+        </div>
+        {% endfor %}
+      {% else %}
+        {% for i in range(6) %}
+        <div class="gallery-item">
+          <div class="empty-slot">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+            </svg>
+            <span>No images yet</span>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section" id="contact" style="background: rgba(10,22,40,0.92);">
+    <div class="sea-life">
+      <div class="bubble bubble-2 delay-1"></div>
+      <div class="bubble bubble-4 delay-3"></div>
+      <div class="bubble bubble-6 delay-5"></div>
+    </div>
+    <div class="section-header">
+      <span class="section-tag">Contact</span>
+      <h2>Book a Dive</h2>
+      <p>Ready to get wet? Send me a message and I'll get back to you within 24 hours with availability, pricing, and any questions you have.</p>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="Your full name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone (optional)</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567">
+      </div>
+      <div class="form-group">
+        <label for="interest">I'm interested in</label>
+        <select id="interest" name="interest">
+          <option value="discover">Discover Scuba Diving</option>
+          <option value="open-water" selected>Open Water Diver</option>
+          <option value="advanced">Advanced Open Water</option>
+          <option value="rescue">Rescue Diver</option>
+          <option value="guided">Guided Dive</option>
+          <option value="specialty">Specialty Course</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required placeholder="Tell me about your dive experience, any questions, or what you're hoping to achieve..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">📬 Send Message</button>
+      <div id="formStatus" class="form-status"></div>
+    </form>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Deep Dive Instruction</h4>
+        <p>Professional PADI freelance scuba instruction. Licensed, insured, and dedicated to teaching diving the right way — safe, patient, and one diver at a time.</p>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Courses</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Certifications</h5>
+        <ul class="footer-links">
+          <li><a href="#">PADI Open Water</a></li>
+          <li><a href="#">PADI Advanced</a></li>
+          <li><a href="#">PADI Rescue</a></li>
+          <li><a href="#">PADI Specialty</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Deep Dive Instruction. All rights reserved.</span>
+      <span>Built with 🌊 for divers</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

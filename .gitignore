@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Uploaded media (keep placeholder images via !)
+uploads/images/*
+!uploads/images/.gitkeep
+uploads/videos/*
+
+# Contact messages
+messages.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+*.env
