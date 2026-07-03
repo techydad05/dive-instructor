@@ -978,14 +978,16 @@ body::after {
   .contact-form { padding: 1.5rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-  .dive-buoy { bottom: 10px; right: 6%; }
-  .dive-buoy svg { width: 28px; height: 40px; }
+  .dive-buoy { bottom: 15px; right: 6%; }
+  .dive-buoy svg { width: 32px; height: 44px; }
 }
 
 @media (max-width: 480px) {
   .gallery-grid { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; width: 100%; }
   .hero-actions .btn { width: 100%; justify-content: center; }
+  .dive-buoy { bottom: 10px; right: 4%; }
+  .dive-buoy svg { width: 28px; height: 38px; }
 }
 
 /* --- Reduced Motion --- */
